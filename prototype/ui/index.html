@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Axia</title>
+<style>
+  :root { --fg:#151515; --muted:#727272; --line:#e6e6e2; --bg:#f7f7f4; --card:#fff; --accent:#2f4bff; --ok:#1a7f37; --warn:#b26b00; --bad:#c62828; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.5 -apple-system, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color:var(--fg); background:var(--bg); }
+  header { position:sticky; top:0; z-index:10; background:rgba(247,247,244,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); padding:12px 20px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  header .logo { font-weight:700; font-size:18px; letter-spacing:-.02em; margin-right:6px; }
+  header .add { flex:1; min-width:260px; display:flex; gap:6px; }
+  input, select { font:inherit; padding:8px 10px; border:1px solid #d3d3ce; border-radius:8px; background:#fff; width:100%; }
+  button { font:inherit; white-space:nowrap; padding:8px 12px; border:1px solid var(--fg); background:#fff; border-radius:8px; cursor:pointer; }
+  button.primary { background:var(--fg); color:#fff; }
+  button.ghost { border-color:transparent; background:none; color:var(--muted); }
+  button:disabled { opacity:.4; cursor:default; }
+  #status { font-size:12px; color:var(--muted); width:100%; min-height:18px; }
+  .wrap { display:grid; grid-template-columns:220px 1fr; gap:20px; padding:20px; max-width:1600px; margin:0 auto; }
+  aside h4 { margin:16px 0 6px; font-size:12px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.05em; }
+  aside h4:first-child { margin-top:0; }
+  .nav a { display:flex; justify-content:space-between; padding:5px 8px; border-radius:6px; color:inherit; text-decoration:none; cursor:pointer; font-size:13px; }
+  .nav a.on { background:#e9ebff; font-weight:600; } .nav a:hover { background:#efefeb; }
+  .nav a span { color:var(--muted); font-variant-numeric:tabular-nums; }
+  .chips span { display:inline-block; background:#ececE8; border-radius:20px; padding:2px 9px; margin:2px; font-size:12px; cursor:pointer; }
+  .chips span.on { background:var(--fg); color:#fff; }
+  .bar { display:flex; gap:8px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  .bar input { max-width:280px; }
+  .seg button { border-radius:0; margin-left:-1px; } .seg button:first-child { border-radius:8px 0 0 8px; } .seg button:last-child { border-radius:0 8px 8px 0; }
+  .seg button.on { background:var(--fg); color:#fff; }
+  .grid { columns:5 220px; column-gap:12px; }
+  .card { break-inside:avoid; margin-bottom:12px; background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; cursor:pointer; }
+  .card img { width:100%; display:block; background:#eee; }
+  .card .meta { padding:8px 10px 10px; }
+  .badge { display:inline-block; font-size:11px; font-weight:600; padding:1px 7px; border-radius:4px; background:#e9ebff; color:#2433b8; margin-right:4px; }
+  .badge.q { background:#fff3d6; color:var(--warn); } .badge.f { background:#fde4e4; color:var(--bad); }
+  .tags { font-size:12px; color:var(--muted); margin-top:4px; line-height:1.4; }
+  .src { font-size:11px; color:var(--muted); float:right; }
+  .group { margin-bottom:26px; } .group h3 { font-size:15px; margin:0 0 10px; } .group h3 span { color:var(--muted); font-weight:400; }
+  .groupgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; }
+  .groupgrid img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:8px; cursor:pointer; background:#eee; }
+  .empty { text-align:center; padding:80px 20px; color:var(--muted); border:2px dashed var(--line); border-radius:14px; }
+  .empty b { color:var(--fg); }
+  body.drag::after { content:"여기에 놓으면 Axia에 추가돼요"; position:fixed; inset:12px; border:3px dashed var(--accent); border-radius:16px; background:rgba(47,75,255,.06); display:grid; place-items:center; font-size:20px; color:var(--accent); z-index:50; pointer-events:none; }
+  dialog { border:0; border-radius:14px; padding:0; max-width:min(980px,94vw); width:100%; box-shadow:0 20px 60px rgba(0,0,0,.25); }
+  dialog::backdrop { background:rgba(0,0,0,.4); }
+  .dlg { display:grid; grid-template-columns:1.2fr 1fr; }
+  .dlg .pic { background:#111; display:grid; place-items:center; max-height:82vh; } .dlg .pic img { max-width:100%; max-height:82vh; }
+  .dlg .side { padding:20px; overflow:auto; max-height:82vh; }
+  .dlg label { display:block; font-size:12px; color:var(--muted); margin:14px 0 4px; }
+  .set { padding:22px; } .set h2 { margin:0 0 4px; font-size:17px; } .set p { color:var(--muted); font-size:13px; margin:0 0 14px; }
+  .chain { display:grid; grid-template-columns:28px 150px 1fr 70px; gap:6px; align-items:center; margin-bottom:6px; }
+  .note { background:#fff8e6; border:1px solid #f1dfb0; border-radius:8px; padding:9px 12px; font-size:12.5px; margin:10px 0; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .row input[type=password] { width:auto; flex:1; min-width:160px; }
+  @media (max-width:800px) { .wrap { grid-template-columns:1fr; } .dlg { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Axia</div>
+  <div class="add"><input id="link" placeholder="링크 붙여넣기: 핀터레스트 핀·보드, 이미지 주소, 웹페이지"><button class="primary" id="addlink">추가</button></div>
+  <button id="pick">파일 올리기</button><input id="files" type="file" multiple accept="image/*" hidden>
+  <button id="pickjson" title="인스타 저장함 수집 확장 프로그램(v0.2)에서 내보낸 JSON">인스타 JSON</button><input id="jsonfile" type="file" accept=".json" hidden>
+  <button class="ghost" id="opensettings">설정</button>
+  <div id="status"></div>
+</header>
+<div class="wrap">
+  <aside>
+    <h4>보기</h4><div class="nav" id="navstate"></div>
+    <h4>분야</h4><div class="nav" id="navfield"></div>
+    <h4>가져온 곳</h4><div class="nav" id="navsrc"></div>
+    <div id="navcolwrap" style="display:none"><h4>인스타 컬렉션</h4><div class="nav" id="navcol"></div></div>
+    <h4>많이 쓰인 태그</h4><div class="chips" id="navtags"></div>
+  </aside>
+  <main>
+    <div class="bar">
+      <input id="q" placeholder="태그·제목 검색 (예: chrome, poster)">
+      <div class="seg"><button data-v="grid" class="on">그리드</button><button data-v="group">그룹별</button><button data-v="field">분야별</button><button data-v="graph">그래프</button></div>
+      <span id="count" class="tags"></span>
+    </div>
+    <div id="out"></div>
+  </main>
+</div>
+
+<dialog id="detail"></dialog>
+<dialog id="settings"><div class="set">
+  <h2>AI 설정</h2>
+  <p>위에서부터 순서대로 시도해요. 앞 모델이 붐비거나(503) 한도에 걸리면(429) 다음 모델로 자동으로 넘어가요. 키가 없는 회사는 건너뛰어요.</p>
+  <div id="chain"></div>
+  <button id="addstep" style="margin-top:4px">+ 모델 추가</button>
+  <h2 style="margin-top:22px">API 키</h2>
+  <p>이 컴퓨터의 axia_data/settings.json 에만 저장돼요. 다른 사람과 이 폴더를 공유하지 마세요.</p>
+  <div class="row" style="margin-bottom:6px"><span style="width:90px">Gemini</span><input id="k_gemini" type="password" placeholder="aistudio.google.com"><span id="ks_gemini" class="tags"></span></div>
+  <div class="row" style="margin-bottom:6px"><span style="width:90px">Anthropic</span><input id="k_anthropic" type="password" placeholder="console.anthropic.com"><span id="ks_anthropic" class="tags"></span></div>
+  <div class="row" style="margin-bottom:6px"><span style="width:90px">OpenAI</span><input id="k_openai" type="password" placeholder="platform.openai.com"><span id="ks_openai" class="tags"></span></div>
+  <h2 style="margin-top:22px">태그 방식</h2>
+  <div class="row"><select id="mode" style="width:auto"><option value="list">태그 목록에서 고르기 (Court)</option><option value="free">자유 태그</option></select>
+    <label class="row" style="font-size:13px"><input type="checkbox" id="auto" style="width:auto"> 들어오면 바로 분석</label></div>
+  <div class="row" style="margin-top:22px; justify-content:flex-end"><button id="retryfail">실패한 것 다시 분석</button><button id="closeset">닫기</button><button class="primary" id="saveset">저장</button></div>
+</div></dialog>
+
+<script src="/ui/app.js"></script>
+<script src="/ui/graph.js"></script>
+</body>
+</html>
