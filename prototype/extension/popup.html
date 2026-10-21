@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<style>
+  body { width:300px; margin:0; padding:16px; font:13px/1.5 -apple-system, "Pretendard", "Malgun Gothic", sans-serif; color:#151515; }
+  h1 { font-size:16px; margin:0 0 10px; }
+  .st { font-size:12px; padding:7px 9px; border-radius:6px; margin-bottom:12px; }
+  .ok { background:#e6f4ea; color:#1a7f37; } .bad { background:#fde4e4; color:#c62828; }
+  button { width:100%; font:inherit; padding:9px; margin-bottom:6px; border:1px solid #151515; background:#fff; border-radius:7px; cursor:pointer; }
+  button.primary { background:#151515; color:#fff; }
+  button:disabled { opacity:.35; cursor:default; }
+  p { color:#6b6b6b; font-size:12px; margin:10px 0 0; }
+  #prog { font-size:12px; margin-top:8px; }
+</style>
+</head>
+<body>
+  <h1>Axia</h1>
+  <div id="st" class="st">확인 중…</div>
+  <button id="board" class="primary" disabled>이 목록 전체 보내기</button>
+  <button id="boardnew" disabled style="display:none">새로 저장한 것만 보내기</button>
+  <button id="page" disabled>이 페이지 대표 이미지 보내기</button>
+  <button id="open">Axia 열기</button>
+  <div id="prog"></div>
+  <p>이미지 하나: 이미지 위에서 <b>우클릭 → Axia로 보내기</b>.<br>목록 통째로: 핀터레스트 보드, 인스타 저장함 컬렉션(모든 게시물 등) 페이지에서 위 버튼.</p>
+  <script src="popup.js"></script>
+</body>
+</html>

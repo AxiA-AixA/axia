@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Axia로 보내기",
+  "version": "0.2.0",
+  "description": "웹에서 본 이미지를 우클릭 한 번으로 내 Axia 보관함에 보내요. 핀터레스트 보드와 인스타 저장함은 통째로 보낼 수 있어요.",
+  "permissions": [
+    "contextMenus",
+    "notifications",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://localhost:8770/*",
+    "http://127.0.0.1:8770/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Axia로 보내기",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
