@@ -1,0 +1,107 @@
+# Axia 태그 목록 (태그 목록 방식에서 AI가 여기서만 고름). 팀에서 자유롭게 고쳐도 돼요.
+# --- 형태·구성
+minimal
+maximal
+geometric
+organic
+abstract
+figurative
+symmetrical
+asymmetrical
+grid-based
+modular
+layered
+negative-space
+dense
+centered-composition
+off-center-composition
+repetition
+pattern
+# --- 질감·재질
+photorealistic
+glossy
+matte
+metallic
+glass
+translucent
+liquid
+soft-body
+fabric
+plastic
+paper
+grain
+noise-texture
+iridescent
+chrome
+# --- 빛
+soft-light
+hard-light
+studio-lighting
+rim-light
+volumetric-light
+neon
+backlit
+high-key
+low-key
+# --- 색
+monochrome
+duotone
+pastel
+vivid
+muted
+dark-palette
+warm-palette
+cool-palette
+gradient
+black-and-white
+# --- 타이포·레이아웃
+typography-led
+serif
+sans-serif
+display-type
+kinetic-type
+editorial-layout
+poster
+book-spread
+magazine
+swiss-style
+brutalist
+collage
+# --- 3D·CG
+3d-render
+product-render
+abstract-3d
+character-3d
+environment-3d
+simulation
+procedural
+low-poly
+clay-render
+# --- 영상·모션
+motion-graphics
+title-sequence
+loop-animation
+transition
+camera-move
+slow-motion
+stop-motion
+live-action
+music-video
+commercial
+# --- AI 이미지
+ai-generated
+surreal
+dreamlike
+hyperreal
+uncanny
+# --- 분위기
+calm
+energetic
+playful
+futuristic
+retro
+nostalgic
+luxurious
+industrial
+natural
+clinical
